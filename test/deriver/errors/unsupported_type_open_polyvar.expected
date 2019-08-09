@@ -1,0 +1,2 @@
+File "unsupported_type_open_polyvar.ml", line 1, characters 0-56:
+Error: ppx_irmin: type alias "[> `Alpha  | `Beta ] as 'a" is not supported.

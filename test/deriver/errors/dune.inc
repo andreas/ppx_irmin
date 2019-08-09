@@ -88,6 +88,28 @@
 )
 
 (library
+  (name unsupported_type_open_polyvar)
+  (modules unsupported_type_open_polyvar)
+  (preprocess (pps ppx_yojson))
+)
+
+(rule
+  (targets unsupported_type_open_polyvar.actual)
+  (deps (:pp pp.exe) (:input unsupported_type_open_polyvar.ml))
+  (action
+    (with-stderr-to
+      %{targets}
+      (bash "./%{pp} -no-color --impl %{input} || true")
+    )
+  )
+)
+
+(alias
+  (name runtest)
+  (action (diff unsupported_type_open_polyvar.expected unsupported_type_open_polyvar.actual))
+)
+
+(library
   (name unsupported_type_package)
   (modules unsupported_type_package)
   (preprocess (pps ppx_yojson))
@@ -129,28 +151,6 @@
 (alias
   (name runtest)
   (action (diff unsupported_type_poly.expected unsupported_type_poly.actual))
-)
-
-(library
-  (name unsupported_type_polyvariant)
-  (modules unsupported_type_polyvariant)
-  (preprocess (pps ppx_yojson))
-)
-
-(rule
-  (targets unsupported_type_polyvariant.actual)
-  (deps (:pp pp.exe) (:input unsupported_type_polyvariant.ml))
-  (action
-    (with-stderr-to
-      %{targets}
-      (bash "./%{pp} -no-color --impl %{input} || true")
-    )
-  )
-)
-
-(alias
-  (name runtest)
-  (action (diff unsupported_type_polyvariant.expected unsupported_type_polyvariant.actual))
 )
 
 (library

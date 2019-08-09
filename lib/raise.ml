@@ -18,16 +18,20 @@ let unsupported_type_open ~loc =
   Location.raise_errorf ~loc
     "%s: extensible variant types are not Irmin-serialisable." name
 
+let unsupported_type_alias ~loc ctyp =
+  Location.raise_errorf ~loc "%s: type alias \"%a\" is not supported." name
+    Pprintast.core_type ctyp
+
 let unsupported_type_poly ~loc ctyp =
   Location.raise_errorf ~loc
     "%s: universally-quantified type %a encountered. Irmin types must be \
      grounded."
     name Pprintast.core_type ctyp
 
-let unsupported_type_polyvar ~loc ctyp =
+let unsupported_type_open_polyvar ~loc ctyp =
   Location.raise_errorf ~loc
-    "%s: polymorphic variant %a encountered. Polymorphic variants are not \
-     Irmin-serialisable."
+    "%s: open polymorphic variant %a encountered. Polymorphic variants must \
+     be closed to be Irmin-serialisable."
     name Pprintast.core_type ctyp
 
 let unsupported_type_package ~loc ctyp =

@@ -95,6 +95,15 @@ type test_variant5 =
 
 type test_variant6 = Nil | Cons of string * test_variant6 [@@deriving irmin]
 
+module MutuallyRecursive = struct
+  type odd = Odd of even option
+
+  and even = Even of odd option [@@deriving irmin]
+end
+
+(* Polymorphic variants *)
+(* type test_polyvariant1 = [ `A ] [@@deriving irmin] *)
+
 (* Records *)
 type test_record1 = {
   alpha : string;
